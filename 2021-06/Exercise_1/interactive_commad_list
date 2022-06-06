@@ -1,0 +1,28 @@
+## For exercise 3 use:
+srun --partition=express --nodes=1 --ntasks=16 --pty --time=01:00:00 /bin/bash
+## Or, alternitively, use the Bootcamp2021 reservation (only valid during bootcamp period 6/7-6/9):
+srun --partition=reservation --reservation=bootcamp2021cpu --ntasks=16 --pty --time=01:00:00 /bin/bash
+
+module load python/3.8.1
+git clone https://github.com/spack/spack.git
+source ~/spack/share/spack/setup-env.sh
+spack list ##note that the command take a long time to load 
+spack list sql
+spack info mysql
+spack info gromacs
+
+module load gcc/10.1.0
+spack compiler find 
+spack info netcdf-c
+spack spec netcdf-c
+
+cd $HOME/Advanced_software_installation_on_Discovery
+cp Exercise_1/packages.yaml ~/.spack/packages.yaml
+cp Exercise_1/config.yaml ~/.spack/config.yaml
+source ~/spack/share/spack/setup-env.sh  ##apply changes to spack 
+spack spec netcdf-c%gcc@10.1.0 +mpi
+spack install -j16 netcdf-c%gcc@10.1.0 +mpi
+
+cd Exercise_1
+cat submit-netcdf-c-example.bash
+sbatch submit-netcdf-c-example.bash 

@@ -1,0 +1,11 @@
+## Spack allows you to customize how your software is built through the packages.yaml file. 
+# Spack’s build defaults are in the default etc/spack/defaults/packages.yaml file. You can override them in ~/.spack/packages.yaml or etc/spack/packages.yaml.
+packages:
+  all:  ## rules for all packages being built by spack:
+    ## all packages to be built with compiler gcc@10.1.0:
+    compiler: [gcc@10.1.0]
+  openmpi: ## rules for the openmpi packages:
+    buildable: false  ## do not build it during installation
+    externals:  ## instead, use this existing module (external to spack):
+      - spec: openmpi@4.0.5%gcc@10.1.0
+        prefix: /shared/centos7/openmpi/4.0.5-skylake-gcc10.1
